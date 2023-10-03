@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Appointment Form</title>
+    <link rel="stylesheet" href="{% static 'form.css' %}">
+    <style>
+        
+        
+ body{
+    background-color: lightblue;
+    font-size: 20px;
+
+     } 
+        
+        
+        .grid-container {
+            background-image: url("../static/images/doctor1.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+          display: grid;
+          grid-template-columns: 1fr 5fr; /* Two columns of equal size */
+          gap: 20px; /* Gap between grid items */
+        }
+    
+        .grid-item {
+          padding: 20px;
+          text-align:left;
+          color:rgb(167, 18, 117);
+        }
+
+      </style>
+</head>
+<body>
+    
+    <div class="grid-container">
+        <div class="grid-item-1" >
+           
+        </div>
+        <div class="grid-item"> 
+            <h1 style="color:blue;">Doctor Appointment</h1>
+            <form  class="formstyle"  method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <a href="test/"><button type="submit" >Submit</button></a>
+             </form>
+        </div>
+    </div>
+</body>
+</html>

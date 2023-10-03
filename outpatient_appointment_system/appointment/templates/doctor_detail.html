@@ -1,0 +1,25 @@
+{% extends "master.html"  %}
+
+{% block title %}
+
+   Doctors Details
+
+{% endblock %}
+
+{% block content %}
+<h1>Doctor Details</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Speciality</th>
+        <th>No of Appointments</th>
+    </tr>
+    <tr> 
+
+        <td>{{doctor_details.name}}</td>
+        <td>{{doctor_details.specialty}}</td>
+        <td>{{doctor_details.max_patients}}</td>
+    </tr>
+</table>
+<a href="appointment/"><button>Book Appointment</button></a>
+{% endblock %}
