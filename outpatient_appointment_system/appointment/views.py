@@ -31,11 +31,23 @@ def appointment_form(request,id):
         if form.is_valid():
             time=form.cleaned_data['appointment_time']
             date=form.cleaned_data['appointment_date']
+            day_of_week = date.strftime('%A')
             data= Appointment.objects.filter(Q(appointment_time=time)
                                               & Q(appointment_date=date))
-            if data:
+            appointment_count = Appointment.objects.filter(appointment_date=date).count()
+            
+            doctor_ins = Doctor.objects.get(id=id)
+            if appointment_count == doctor_ins.max_patients :
+               template= loader.get_template('limit.html')
+               return HttpResponse(template.render())
+
+            if data or day_of_week == "Sunday" :
               return redirect('fail')
-            return redirect('appointment_success')
+            
+            form.save()
+            template= loader.get_template('success.html')
+            # return redirect('appointment_success')
+            return HttpResponse(template.render())
     else:
         form = AppointmentForm()
     
@@ -43,6 +55,10 @@ def appointment_form(request,id):
 def failed_booking(request):
       template=loader.get_template('fail.html')
       return HttpResponse(template.render())
+
+def limit_exceeded():
+    template=loader.get_template('limit.html')
+    return HttpResponse(template.render())
 
 def appointment_success(request):
     return render(request, 'success.html')

@@ -1,4 +1,4 @@
-import statistics
+
 from django.conf import settings
 
 from django.urls import path
@@ -12,6 +12,7 @@ urlpatterns = [
     path('doctors/details/<int:id>/appointment/', appointment_form, name='appointment_form'),
     path('appointment/success/', appointment_success, name='appointment_success'),
     path('fail/', failed_booking, name='fail'),
+    path('limit_exceeded/', limit_exceeded, name='limit_exceeded'),
 
 ]
 
