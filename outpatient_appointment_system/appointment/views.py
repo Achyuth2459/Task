@@ -29,15 +29,16 @@ def appointment_form(request,id):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
+            doc=form.cleaned_data['doctor']
             time=form.cleaned_data['appointment_time']
             date=form.cleaned_data['appointment_date']
             day_of_week = date.strftime('%A')
             data= Appointment.objects.filter(Q(appointment_time=time)
-                                              & Q(appointment_date=date))
-            appointment_count = Appointment.objects.filter(appointment_date=date).count()
+                                              & Q(appointment_date=date) & Q(doctor__name=doc.name))
+            appointment_count = Appointment.objects.filter(Q(appointment_date=date) & Q(doctor__name=doc.name)).count()
             
-            doctor_ins = Doctor.objects.get(id=id)
-            if appointment_count == doctor_ins.max_patients :
+    
+            if appointment_count >= doc.max_patients :
                template= loader.get_template('limit.html')
                return HttpResponse(template.render())
 
